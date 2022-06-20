@@ -1,7 +1,4 @@
-local TS = _G[script]
-local ContentProvider = game:GetService("ContentProvider")
-
-local Animation = { _animations = {}, }
+local Animation = { _animations = {} }
 do
 	function Animation.createAnimations(animIds)
 		local animations = {}
@@ -26,24 +23,6 @@ do
 		local animation = Instance.new("Animation")
 		animation.AnimationId = if type(id) == "string" then id else "rbxassetid://" .. tostring(id)
 		return animation
-	end
-
-	function Animation.preloadAsync()
-		TS.Promise.new(function(resolve, reject)
-			local success = {}
-			local failed = {}
-			ContentProvider:PreloadAsync({ Animation._animations }, function(id, status: Enum.AssetFetchStatus)
-				if status == Enum.AssetFetchStatus.Success then
-					table.insert(success, id)
-				else
-					table.insert(failed, id)
-				end
-			end)
-			return resolve({
-				success = #success,
-				failed = #failed,
-			})
-		end)
 	end
 
 	function Animation.loadAnimator(animator: Animator, bundle)

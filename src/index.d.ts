@@ -12,6 +12,5 @@ type TrackObject<Input> = {
 export declare namespace Animation {
 	export const createAnimations: <I extends Input>(animIds: I) => AnimationObject<I>;
 	export const createSlice: (id: AnimationID) => Animation;
-	export const preloadAsync: () => Promise<{ success: number; failed: number }>;
 	export const loadAnimator: <I extends AnimationObject<{}>>(animator: Animator, bundle: I) => TrackObject<I>;
 }
