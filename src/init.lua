@@ -12,7 +12,7 @@ do
 				local animation = value
 				animations[key] = animation
 				table.insert(Animation._animations, animation)
-			elseif type(value) == "table" then
+			elseif inputType == "table" then
 				animations[key] = Animation.createAnimations(value)
 			end
 		end
@@ -25,16 +25,15 @@ do
 		return animation
 	end
 
-	function Animation.loadAnimator(animator: Animator, bundle)
+	function Animation.loadAnimator(animator, bundle)
 		local animations = {}
 		for key, value in pairs(bundle) do
 			local inputType = typeof(value)
 			if inputType == "Instance" and value:IsA("Animation") then
 				local animation = animator:LoadAnimation(value)
 				animations[key] = animation
-				table.insert(Animation._animations, animation)
-			elseif type(value) == "table" then
-				animations[key] = Animation.loadAnimator(value)
+			elseif inputType == "table" then
+				animations[key] = Animation.loadAnimator(animator, value)
 			end
 		end
 		return animations
